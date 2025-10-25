@@ -1,0 +1,35 @@
+{
+  "name": "@nui/components",
+  "version": "1.0.0",
+  "description": "This is tailwind and mui based react component library for nui framework.",
+  "main": "index.js",
+  "scripts": {
+    "storybook": "storybook dev -p 6006 ",
+    "build-storybook": "storybook build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@mui/material": "^7.3.4",
+    "@tailwindcss/postcss": "^4.1.16",
+    "@tailwindcss/vite": "^4.1.16",
+    "class-variance-authority": "^0.7.1",
+    "lucide-react": "^0.547.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "tailwind-merge": "^3.3.1",
+    "tailwindcss": "^4.1.16"
+  },
+  "devDependencies": {
+    "@storybook/react-vite": "^9.1.13",
+    "@types/node": "^24.9.1",
+    "autoprefixer": "^10.4.21",
+    "postcss": "^8.5.6",
+    "storybook": "^9.1.13",
+    "typescript": "^5.9.3"
+  }
+}
