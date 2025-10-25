@@ -1,16 +1,14 @@
 /** @type {import('tailwindcss').Config} */
-
-const config = {
-  content: ["./src/**/*.{js,ts,jsx,tsx,mdx}"],
-  darkMode: "class",
+module.exports = {
+  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
-    boxShadow: {
-      soft: "0 2px 10px rgba(0, 0, 0, 0.05)",
-      medium: "0 4px 20px rgba(0, 0, 0, 0.08)",
-      hard: "0 8px 30px rgba(0, 0, 0, 0.12)",
+    extend: {
+      boxShadow: {
+        soft: "0 2px 10px rgba(0, 0, 0, 0.05)",
+        medium: "0 4px 20px rgba(0, 0, 0, 0.08)",
+        hard: "0 8px 30px rgba(0, 0, 0, 0.12)",
+      },
     },
   },
   plugins: [],
 };
-
-module.exports = config;

@@ -1,7 +1,7 @@
-import { CSSProperties } from "react";
-import { Color, Size } from "../../types";
-import { TEXT_COLOR_MAPPING } from "@/constants";
+import { type CSSProperties } from "react";
+import { Color, Size } from "@/types";
 import { cn } from "@/utils";
+import { TEXT_COLOR_MAPPING } from "@/constants";
 
 export interface ISpinnerProps {
   size?: Size;
@@ -29,7 +29,7 @@ export const Spinner = ({
       className={cn(
         "circular-loader animate-spin rounded-full",
         TEXT_COLOR_MAPPING[color],
-        className
+        className,
       )}
       style={{
         border: `${borderWidth} solid`,

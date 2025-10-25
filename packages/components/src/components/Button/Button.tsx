@@ -4,6 +4,7 @@ import { cn } from "@/utils";
 import { ButtonVariant, type IButtonProps, useButtonProps } from "./useButton";
 import { ISpinnerProps, Spinner } from "../Spinner";
 import { MainColor } from "@/types";
+import { forwardRef } from "react";
 
 const spinnerColorMap: Record<
   ButtonVariant,
@@ -44,11 +45,11 @@ const spinnerColorMap: Record<
   },
 };
 
-const Button = (props: IButtonProps) => {
-  const { spinnerSize, getButtonProps } = useButtonProps(props);
+const Button = forwardRef<HTMLButtonElement, IButtonProps>((props, ref) => {
+  const { htmlButtonProps } = useButtonProps(props);
 
   return (
-    <button type={props.type || "button"} {...getButtonProps()}>
+    <button {...htmlButtonProps} ref={ref}>
       <div
         className={cn("h-full flex items-center gap-2", {
           "opacity-0": props.loading,
@@ -63,7 +64,7 @@ const Button = (props: IButtonProps) => {
           "absolute h-full w-full flex items-center gap-2 justify-center left-0 top-0",
           {
             hidden: !props.loading,
-          }
+          },
         )}
       >
         <Spinner
@@ -76,6 +77,6 @@ const Button = (props: IButtonProps) => {
       </div>
     </button>
   );
-};
+});
 
 export default Button;

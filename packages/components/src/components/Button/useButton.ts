@@ -1,9 +1,9 @@
 "use client";
 import { type VariantProps, cva } from "class-variance-authority";
 import type React from "react";
-import type { CSSProperties } from "react";
-import { cn } from "@/utils";
+import { type CSSProperties } from "react";
 import { MainColor, Size } from "@/types";
+import { cn } from "@/utils";
 
 export type ButtonVariant = "solid" | "outline" | "text";
 export type ButtonBorderType = "circle" | "rounded" | "square";
@@ -18,11 +18,11 @@ const buttonVariants = cva(
         text: "",
       } satisfies Record<ButtonVariant, string>,
       size: {
-        xs: "text-[10px] h-[20px] px-1 font-medium",
-        sm: "text-xs h-[24px] px-2 font-medium",
-        md: "text-sm h-[32px] px-3 font-medium",
-        lg: "text-base h-[40px] px-4 font-medium",
-        xl: "text-md h-[48px] px-5 font-medium",
+        xs: "text-[10px] h-[30px] px-1 font-medium",
+        sm: "text-xs h-[36px] px-2 font-medium",
+        md: "text-sm h-[40px] px-3 font-medium",
+        lg: "text-base h-[48px] px-4 font-medium",
+        xl: "text-md h-[56px] px-5 font-medium",
       } satisfies Record<Size, string>,
       borderType: {
         circle: "rounded-full",
@@ -226,10 +226,17 @@ const buttonVariants = cva(
         className: "rounded-xl",
       },
     ],
-  }
+  },
 );
 
-export interface IButtonProps extends VariantProps<typeof buttonVariants> {
+type HTMLButtonProps = Omit<
+  React.ButtonHTMLAttributes<HTMLButtonElement>,
+  "size" | "color" | "disabled" | "onClick"
+>;
+
+export interface IButtonProps
+  extends VariantProps<typeof buttonVariants>,
+    HTMLButtonProps {
   loading?: boolean;
   leadingComp?: React.ReactNode;
   trailingComp?: React.ReactNode;
@@ -237,38 +244,48 @@ export interface IButtonProps extends VariantProps<typeof buttonVariants> {
   children?: React.ReactNode;
   onClick?: () => void;
   className?: string;
-  type?: React.ButtonHTMLAttributes<HTMLButtonElement>["type"];
   minWidth?: CSSProperties["minWidth"];
+  tooltip?: string;
 }
 
-export const useButtonProps = (props: IButtonProps) => {
-  const onClick = () => {
-    if (props.loading || props.disabled) return;
-
+export const useButtonProps = ({
+  variant,
+  color,
+  size,
+  borderType,
+  fullWidth,
+  disabled,
+  className,
+  minWidth,
+  loading,
+  ...props
+}: IButtonProps) => {
+  const onClick = (e: React.SyntheticEvent) => {
+    e.stopPropagation();
+    if (loading || disabled) return;
     props.onClick?.();
   };
-  const getButtonProps = () => {
-    return {
-      onClick: onClick,
-      className: cn(
-        buttonVariants({
-          variant: props.variant,
-          color: props.color,
-          size: props.size,
-          borderType: props.borderType,
-          fullWidth: props.fullWidth,
-          disabled: props.disabled,
-        }),
-        props.className
-      ),
-      style: {
-        minWidth: props.minWidth,
-      },
-    };
+
+  const htmlButtonProps: React.ButtonHTMLAttributes<HTMLButtonElement> = {
+    onClick: onClick,
+    className: cn(
+      buttonVariants({
+        variant: variant,
+        color: color,
+        size: size,
+        borderType: borderType,
+        fullWidth: fullWidth,
+        disabled: disabled ? true : false,
+      }),
+      className,
+    ),
+    style: {
+      minWidth: minWidth,
+    },
+    ...props,
   };
 
   return {
-    getButtonProps,
-    spinnerSize: props.size || "md",
+    htmlButtonProps,
   };
 };
